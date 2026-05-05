@@ -1,0 +1,22 @@
+{
+  "name": "camara-scraper",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node src/jobs/ultimasVotaciones.js",
+    "asistencia": "node src/jobs/asistencia.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.101.1",
+    "axios": "^1.14.0",
+    "cheerio": "^1.2.0",
+    "dotenv": "^17.4.1",
+    "playwright": "^1.59.1",
+    "playwright-extra": "^4.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  }
+}
