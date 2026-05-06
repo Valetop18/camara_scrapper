@@ -5,7 +5,7 @@ import { obtenerComisiones } from "../scrapers/comisiones.js";
 import { obtenerOficios } from "../scrapers/oficios.js";
 import { closeBrowser } from "../http/client.js";
 import { obtenerMociones } from "../scrapers/mociones.js";
-import { guardarAsistencia, guardarComisiones, guardarMociones } from "../db/supabase.js";
+import { guardarAsistencia, guardarComisiones, guardarMociones, guardarOficios } from "../db/supabase.js";
 
 
 const prueba = false;
@@ -32,13 +32,18 @@ const run = async () => {
     for (const diputado of diputadosSlice){
         try {
             //registros = await obtenerAsistencia(diputado.id_diputado)
-            const comisiones = await obtenerComisiones(diputado.id_diputado)
-            await guardarComisiones(comisiones)
+            // const comisiones = await obtenerComisiones(diputado.id_diputado)
+            // await guardarComisiones(comisiones)
 
-            const mociones = await obtenerMociones(diputado.id_diputado)
-            console.log('guardando mocion diputado: ', diputado.nombre)
-            console.log(mociones);
-            await guardarMociones(mociones)
+            // const mociones = await obtenerMociones(diputado.id_diputado)
+
+            // await guardarMociones(mociones)
+            console.log('guardando oficios diputado: ', diputado.nombre)
+
+            const oficios = await obtenerOficios(diputado.id_diputado)
+            console.log(oficios);
+            await guardarOficios(oficios, diputado.id_diputado)
+
 
             //guardar en supabase    
         } catch (error) {

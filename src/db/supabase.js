@@ -99,3 +99,21 @@ export const guardarMociones = async (mocionesDiputado) => {
     await guardar('diputado_mociones', diputadoMociones, 'id_diputado,id_mocion' )
 
 }
+
+export const guardarOficios = async (oficiosDiputado, idDiputado) => {
+    const registros = oficiosDiputado
+
+    const oficios = registros.map( (oficio) => ({
+        numero_oficio: numero(oficio),
+    }))
+
+    await guardar('oficios', oficios, 'numero_oficio' )
+
+    const diputadoOficios = registros.map( (oficio) => ({
+        id_diputado: numero(idDiputado),
+        id_oficio: numero(oficio)
+    }))
+
+    await guardar('diputado_oficios', diputadoOficios, 'id_diputado,id_oficio' )
+
+}

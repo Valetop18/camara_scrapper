@@ -51,9 +51,15 @@ export const camaraHttp = {
             await pg.goto(url, { waitUntil: 'domcontentloaded' })
         }
 
-        await pg.locator(`a[href*="${eventTarget}"]`).click();    
+        const locator = pg.locator(`a[href*="${eventTarget}"]`)
+        const page = locator.page()
+        const navegacion = page.waitForNavigation( { waitUntil: 'domcontentloaded', timeout: 15000 } ).catch( () => null )
+        await locator.click()
+        await navegacion
 
         await pg.waitForLoadState('domcontentloaded')
+        await page.waitForLoadState('networkidle', { timeout: 15000 } ).catch( () => null )
+
         return await pg.content();
 
     },
