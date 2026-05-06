@@ -21,7 +21,6 @@ export const obtenerOficios = async (idDiputado) => {
 
     const htmlPag2 = await camaraHttp.doPostBack(url, htmlPag1, EVENT_TARGET_PAG2  )
     const oficiosPag2 = parseOficios(htmlPag2, idDiputado);
-    ('oficios pag 2: ', oficiosPag2);
 
     return [...oficiosPag1, ...oficiosPag2]
 

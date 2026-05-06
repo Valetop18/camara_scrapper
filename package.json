@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "start": "node src/jobs/ultimasVotaciones.js",
+    "votaciones": "node src/jobs/ultimasVotaciones.js",
     "asistencia": "node src/jobs/asistencia.js"
   },
   "keywords": [],

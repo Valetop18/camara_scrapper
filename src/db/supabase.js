@@ -33,12 +33,9 @@ export const guardarVotacion = async (votacion, detalle, votos) => {
         resultado: detalle.resultado
     }
 
-    console.log('data final: ', votacionNormalizada)
-
     await guardar('votaciones', [votacionNormalizada], 'id_votacion' )
 
     if (votos?.length){
-        console.log('guardando votos diputado')
         await guardarVotosDiputado(votos)
     }
 }
