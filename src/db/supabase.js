@@ -1,8 +1,9 @@
 import { createClient } from "@supabase/supabase-js";
+import { getRequiredEnv } from "../config/env.js";
 
 const supabase = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_ANON_KEY,
+    getRequiredEnv('SUPABASE_URL'),
+    getRequiredEnv('SUPABASE_ANON_KEY'),
 )
 
 const numero = (valor) => {

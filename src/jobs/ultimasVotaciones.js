@@ -49,4 +49,4 @@ run().catch(error => {
     console.error(`Error: `, error)
     process.exitCode = 1
 })
-.finally(() => closeBrowser() );
+.finally( async () => await closeBrowser() );

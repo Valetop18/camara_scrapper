@@ -143,3 +143,16 @@ CREATE TABLE diputado_mociones (
     primary key (id_diputado, id_mocion)
 );
 
+### Oficios
+CREATE TABLE oficios (
+    numero_oficio integer primary key,
+    scraped_at timestamptz default now(),
+);
+
+CREATE TABLE diputado_oficios (
+    id_diputado integer not null references diputados(id) on delete cascade,
+    id_oficio integer not null references oficios(numero_oficio) on delete cascade,
+    scraped_at timestamptz default now(),
+    primary key (id_diputado, id_oficio)
+);
+
