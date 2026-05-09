@@ -9,6 +9,8 @@ const delay = (ms) => new Promise(resolve=> setTimeout(resolve, ms));
 
 const URL_LISTADO = `${process.env.CAMARA_BASE_URL}/legislacion/sala_sesiones/votaciones.aspx`
 
+console.log(URL_LISTADO)
+
 const SELECTORES = {
     linkFecha: '#ContentPlaceHolder1_ContentPlaceHolder1_PaginaContent_link_porFecha',
     inputDesde: '#ContentPlaceHolder1_ContentPlaceHolder1_PaginaContent_fecha_desde',
