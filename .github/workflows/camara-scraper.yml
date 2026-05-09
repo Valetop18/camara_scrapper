@@ -10,7 +10,7 @@ on:
     inputs:
       job:
         description: 'Job a ejecutar'
-        required: true,
+        required: true
         default: 'ambos'
         type: choice
         options:
@@ -30,12 +30,12 @@ concurrency:
   cancel-in-progress: false
 
 env:
-CAMARA_BASE_URL : https://www.camara.cl
-DELAY : 7000
-DIAS_ATRAS : 8
-RESULTADOS_POR_PAGINA : 10
-SUPABASE_URL : ${{ secrets.SUPABASE_URL}}
-SUPABASE_ANON_KEY : ${{ secrets.SUPABASE_ANON_KEY}}
+  CAMARA_BASE_URL : https://www.camara.cl
+  DELAY : 7000
+  DIAS_ATRAS : 8
+  RESULTADOS_POR_PAGINA : 10
+  SUPABASE_URL : ${{ secrets.SUPABASE_URL}}
+  SUPABASE_ANON_KEY : ${{ secrets.SUPABASE_ANON_KEY}}
 
 jobs:
   votaciones:
