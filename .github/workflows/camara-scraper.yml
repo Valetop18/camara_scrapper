@@ -41,7 +41,7 @@ jobs:
   votaciones:
     name: votaciones
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 30
     if: ${{ (github.event_name == 'schedule' && github.event.schedule == '0 18 * * 1,2,3,4,5' || (github.event_name == 'workflow_dispatch' && (inputs.job == 'ambos' || inputs.job == 'votaciones' ) ) ) }}
     steps:
       - name: Checkout
