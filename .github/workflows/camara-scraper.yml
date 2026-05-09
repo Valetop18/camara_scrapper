@@ -1,0 +1,93 @@
+name: Camara Scraper
+
+on:
+  schedule:
+  - cron: '0 18 * * 1,2,3,4,5'
+    timezone: 'America/Santiago'
+  - cron: '0 18 * * 1,2,3,4,5'
+    timezone: 'America/Santiago'
+  workflow_dispatch:
+    inputs:
+      job:
+        description: 'Job a ejecutar'
+        required: true,
+        default: 'ambos'
+        type: choice
+        options:
+          - ambos
+          - votaciones
+          - diputados
+        limite_diputados:
+          description: 'Limite opcional, dejar vacio para procesar todos'
+          required: false
+          type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: camara-scraper-${{github.ref}}
+  cancel-in-progress: false
+
+env:
+CAMARA_BASE_URL : https://www.camara.cl
+DELAY : 7000
+DIAS_ATRAS : 8
+RESULTADOS_POR_PAGINA : 10
+SUPABASE_URL : ${{ secrets.SUPABASE_URL}}
+SUPABASE_ANON_KEY : ${{ secrets.SUPABASE_ANON_KEY}}
+
+jobs:
+  votaciones:
+    name: votaciones
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    if: ${{ (github.event_name == 'schedule' && github.event.schedule == '0 18 * * 1,2,3,4,5' || (github.event_name == 'workflow_dispatch' && (inputs.job == 'ambos' || inputs.job == 'votaciones' ) ) ) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+        
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Install playwright chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Check sintaxis
+        run: node --check src/jobs/ultimasVotaciones.js
+
+      - name: Run votaciones scraper
+        run: npm run votaciones
+
+  diputados:
+    name: diputados
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    if: ${{ (github.event_name == 'schedule' && github.event.schedule == '0 18 * * 1,2,3,4,5' || (github.event_name == 'workflow_dispatch' && (inputs.job == 'ambos' || inputs.job == 'diputados' ) ) ) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+        
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Install playwright chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Check sintaxis
+        run: node --check src/jobs/diputados.js
+
+      - name: Run diputados scraper
+        run: npm run diputados
