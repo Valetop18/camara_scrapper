@@ -2,9 +2,9 @@ name: Camara Scraper
 
 on:
   schedule:
-  - cron: '0 18 * * 1,2,3,4,5'
+  - cron: '0 18 * * 1,2,3'
     timezone: 'America/Santiago'
-  - cron: '0 18 * * 1,2,3,4,5'
+  - cron: '0 18 * * 1,2,3'
     timezone: 'America/Santiago'
   workflow_dispatch:
     inputs:
@@ -42,7 +42,7 @@ jobs:
     name: votaciones
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    if: ${{ (github.event_name == 'schedule' && github.event.schedule == '0 18 * * 1,2,3,4,5' || (github.event_name == 'workflow_dispatch' && (inputs.job == 'ambos' || inputs.job == 'votaciones' ) ) ) }}
+    if: ${{ (github.event_name == 'schedule' && github.event.schedule == '0 18 * * 1,2,3' || (github.event_name == 'workflow_dispatch' && (inputs.job == 'ambos' || inputs.job == 'votaciones' ) ) ) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -69,7 +69,7 @@ jobs:
     name: diputados
     runs-on: ubuntu-latest
     timeout-minutes: 180
-    if: ${{ (github.event_name == 'schedule' && github.event.schedule == '0 18 * * 1,2,3,4,5' || (github.event_name == 'workflow_dispatch' && (inputs.job == 'ambos' || inputs.job == 'diputados' ) ) ) }}
+    if: ${{ (github.event_name == 'schedule' && github.event.schedule == '0 18 * * 1,2,3' || (github.event_name == 'workflow_dispatch' && (inputs.job == 'ambos' || inputs.job == 'diputados' ) ) ) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v5

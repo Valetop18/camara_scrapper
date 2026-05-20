@@ -8,10 +8,17 @@ const SELECTORES = {
     observaciones: 'td:nth-child(4)',
 }
 
+const parseAusenciasJustificadas = ($) => {
+    const valor = $('.tabla').first().find('tbody tr:first-child td:nth-child(4)').text().trim();
+    return valor;
+}
+
 
 export const parseAsistencia = (html, idDiputado) => {
     const $ = cheerio.load(html);
     const registros = []
+
+    const ausenciasJustificadas = parseAusenciasJustificadas($)
 
     $(SELECTORES.filas).each((_, el) => {
         const $el = $(el);
@@ -54,5 +61,11 @@ export const parseAsistencia = (html, idDiputado) => {
         console.error('parseDiputados no encontro diputados, revisar html de la pagina')
     }
 
-    return registros
+    return {
+        sesiones: registros,
+        resumen: {
+            id_diputado: idDiputado,
+            ausencias_justificadas: ausenciasJustificadas
+        }
+    }
 }

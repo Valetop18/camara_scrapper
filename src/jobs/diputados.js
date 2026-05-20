@@ -5,7 +5,7 @@ import { obtenerComisiones } from "../scrapers/comisiones.js";
 import { obtenerOficios } from "../scrapers/oficios.js";
 import { closeBrowser } from "../http/client.js";
 import { obtenerMociones } from "../scrapers/mociones.js";
-import { guardarAsistencia, guardarComisiones, guardarMociones, guardarOficios } from "../db/supabase.js";
+import { guardarAsistencia, guardarComisiones, guardarMociones, guardarOficios, guardarResumenAsistencia } from "../db/supabase.js";
 
 const LIMITE_DIPUTADOS = Number.parseInt(process.env.LIMITE_DIPUTADOS)
 
@@ -20,8 +20,10 @@ const guardarDataDiputado = async (diputado, actual, total) => {
     
     console.log('Scrapeando asistencia')
     const asistencia = await obtenerAsistencia(diputado.id_diputado)
-    await guardarAsistencia(asistencia)
-    console.log(`[${progreso}] Asistencia guardada: ${asistencia.length} registros`)
+    await guardarAsistencia(asistencia.sesiones)
+    await guardarResumenAsistencia(asistencia.resumen)
+    console.log(`[${progreso}] Asistencia guardada: ${asistencia.sesiones.length} registros`)
+    console.log(`[${progreso}] Asistencias justificadas: ${asistencia.resumen.ausencias_justificadas}`)
 
     console.log('Scrapeando comisiones')
     const comisiones = await obtenerComisiones(diputado.id_diputado)

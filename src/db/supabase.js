@@ -60,6 +60,19 @@ export const guardarAsistencia = async (registros) => {
     if (error) throw new Error(`Error guardando asistencia: ${error.message}`)
 }
 
+
+export const guardarResumenAsistencia = async (resumenAsistencia) => {
+    if(!resumenAsistencia) return;
+
+    const registro = {
+        id_diputado: numero(resumenAsistencia.id_diputado),
+        ausencias_justificadas: numero(resumenAsistencia.ausencias_justificadas)
+    }
+
+    await guardar('asistencia_resumen', [registro], 'id_diputado')
+}
+
+
 export const guardarComisiones = async (comisionesDiputado) => {
     const registros = comisionesDiputado
 

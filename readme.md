@@ -156,3 +156,54 @@ CREATE TABLE diputado_oficios (
     primary key (id_diputado, id_oficio)
 );
 
+### Trigger fecha
+
+create or replace function convertir_fecha_asistencia()
+returns trigger
+language plpgsql
+as $$
+BEGIN
+
+    new.fecha_date := to_date(
+        replace(
+        replace(
+        replace(
+        replace(
+        replace(
+        replace(
+        replace(
+        replace(
+        replace(
+        replace(
+        replace(
+        replace( lower(new.fecha),
+            'enero', 'january'),
+            'febrero', 'february'),
+            'marzo', 'march'),
+            'abril', 'april'),
+            'mayo', 'may'),
+            'junio', 'june'),
+            'julio', 'july'),
+            'agosto', 'august'),
+            'septiembre', 'september'),
+            'octubre', 'october'),
+            'noviembre', 'november'),
+            'diciembre', 'december'
+        ),
+        'DD Month YYYY'
+    );
+
+    return new;
+end;
+$$;
+
+CREATE TRIGGER trigger_convertir_fecha_asistencia
+BEFORE INSERT OR UPDATE ON asistencia
+for each ROW
+EXECUTE FUNCTION convertir_fecha_asistencia();
+
+CREATE TABLE asistencia_resumen (
+    id_diputado integer primary key references diputados(id) on delete cascade,
+    ausencias_justificadas int,
+    scraped_at timestamptz default now()
+);
