@@ -21,7 +21,10 @@ on:
           description: 'Limite opcional, dejar vacio para procesar todos'
           required: false
           type: string
-
+        dias_atras:
+          description: 'Limite opcional, dejar vacio para procesar todos'
+          required: false
+          type: string
 permissions:
   contents: read
 
@@ -32,7 +35,7 @@ concurrency:
 env:
   CAMARA_BASE_URL : https://www.camara.cl
   DELAY : 7000
-  DIAS_ATRAS : 8
+  DIAS_ATRAS : 5
   RESULTADOS_POR_PAGINA : 10
   SUPABASE_URL : ${{ secrets.SUPABASE_URL}}
   SUPABASE_ANON_KEY : ${{ secrets.SUPABASE_ANON_KEY}}
@@ -43,6 +46,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     if: ${{ (github.event_name == 'schedule' && github.event.schedule == '0 18 * * 1,2,3' || (github.event_name == 'workflow_dispatch' && (inputs.job == 'ambos' || inputs.job == 'votaciones' ) ) ) }}
+    env: 
+      DIAS_ATRAS: ${{github.event_name == 'workflow_dispatch' && inputs.dias_atras || vars.DIAS_ATRAS}}
     steps:
       - name: Checkout
         uses: actions/checkout@v5
