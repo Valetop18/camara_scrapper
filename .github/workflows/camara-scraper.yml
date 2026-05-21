@@ -17,14 +17,14 @@ on:
           - ambos
           - votaciones
           - diputados
-        limite_diputados:
-          description: 'Limite opcional, dejar vacio para procesar todos'
-          required: false
-          type: string
-        dias_atras:
-          description: 'Limite opcional, dejar vacio para procesar todos'
-          required: false
-          type: string
+      limite_diputados:
+        description: 'Limite opcional, dejar vacio para procesar todos'
+        required: false
+        type: string
+      dias_atras:
+        description: 'Limite opcional, dejar vacio para procesar todos'
+        required: false
+        type: string
 permissions:
   contents: read
 
