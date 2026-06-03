@@ -68,7 +68,9 @@ export const obtenerVotacionesPorFecha = async (page) => {
 
     const fechaDesde = formatearFecha(desde)
     const fechaHasta = formatearFecha(hoy)
-
+    console.log("fecha desde: ",fechaDesde)
+    console.log("hoy: ",hoy)
+    console.log("dias atras: ",DIAS_ATRAS)
 
     await page.locator(SELECTORES.inputDesde).fill(fechaDesde)
     await page.locator(SELECTORES.inputHasta).fill(fechaHasta)
