@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "votaciones": "node src/jobs/ultimasVotaciones.js",
-    "diputados": "node src/jobs/diputados.js"
+    "diputados": "node src/jobs/diputados.js",
+    "senadores": "node src/jobs/senadores.js",
+    "edgeVotaciones": "node scripts/resumirVotaciones.js"
   },
   "keywords": [],
   "author": "",

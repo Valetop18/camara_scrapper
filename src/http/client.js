@@ -12,12 +12,13 @@ let pag = null
 
 export const getBrowser = async () => {
     if (!browser) {
-        browser = await chromium.launch( { headless: true })
+        browser = await chromium.launch( { headless: false })
         const context = await browser.newContext({
             locale: 'es-CL',
             userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/37.0.2062.94 Chrome/37.0.2062.94 Safari/537.36'
         })
         pag = await context.newPage();
+        await delay(10000);
         console.log('Navegador iniciado')
     }
     return pag;
