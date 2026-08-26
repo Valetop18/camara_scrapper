@@ -64,6 +64,20 @@ export const actualizarRankingEstadisticoDiputados = async () => {
   return data ?? [];
 };
 
+export const actualizarRankingEstadisticoSenadores = async () => {
+  const { data, error } = await supabase.rpc(
+    "actualizar_ranking_estadistico_senadores",
+  );
+
+  if (error) {
+    throw new Error(
+      `Error actualizando ranking estadístico de senadores: ${error.message}`,
+    );
+  }
+
+  return data ?? [];
+};
+
 export const guardarVotosDiputado = async (votos) => {
   const registros = votos.map((voto) => ({
     id_votacion: numero(voto.id_votacion),
@@ -218,7 +232,9 @@ export const guardarVotacionesSenado = async (votacionesSenado) => {
     numero_sesion: numero(registro.votacion.numero_sesion),
     fecha_texto: registro.votacion.fecha,
     tema: registro.votacion.tema,
-    boletin: registro.votacion.boletin
+    boletin: registro.votacion.boletin,
+    quorum: registro.votacion.quorum,
+    resultado: registro.votacion.resultado
   }))
 
   await guardar('votaciones_senado', votaciones, 'id_votacion');
